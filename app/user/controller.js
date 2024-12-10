@@ -136,24 +136,21 @@ export const deleteUser = async (req, res) => {
 };
 
 export const updatePassword = async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
+  const { old_password, new_password } = req.body;
   try {
-    const user = await UserModel.findById(req.user.id);
+    const user = await UserModel.findById(req.user._id);
     if (!user) {
       return errorHandler({ message: "User not found", statusCode: 404 }, res);
     }
-    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    const isMatch = await bcrypt.compare(old_password, user.password);
 
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid password" });
     }
-    user.password = await bcrypt.hash(newPassword, 10);
+    user.password = await bcrypt.hash(new_password, 10);
     await user.save();
     return res.status(204).json({
       message: "Password updated successfully",
-      error: null,
-      data: null,
-      status: 204,
     });
   } catch (err) {
     console.error(err);
