@@ -189,7 +189,7 @@ export const deleteArtist = async (req, res) => {
       data: {
         id: artist._id,
       },
-      message: "Artist Deleted Successfully",
+      message: `Artist:${artist.name} Deleted Successfully`,
       status: 200,
       error: null,
     });
