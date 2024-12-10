@@ -29,6 +29,8 @@ export const getArtist = async (req, res) => {
         grammy: artist.grammy,
         hidden: artist.hidden,
       },
+      message: "Artist retrieved successfully",
+      error: null,
       status: 200,
     });
   } catch (err) {
