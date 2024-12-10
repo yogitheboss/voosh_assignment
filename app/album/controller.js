@@ -42,7 +42,7 @@ export async function getAlbum(req, res) {
   try {
     if (!id) {
       return errorHandler(
-        { status: 400, message: "Bad request Id is required" },
+        { statusCode: 400, message: "Bad request Id is required" },
         res
       );
     }
@@ -55,7 +55,7 @@ export async function getAlbum(req, res) {
       hidden: album.hidden,
     };
     if (!album) {
-      return errorHandler({ status: 404, message: "Album not found" }, res);
+      return errorHandler({ statusCode: 404, message: "Album not found" }, res);
     }
     return res.status(200).json({
       data: newAlbum,
@@ -74,10 +74,16 @@ export async function addAlbum(req, res) {
   const { name, artists, year, hidden } = req.body;
   try {
     if (!name) {
-      return errorHandler({ status: 400, message: "Name is required" }, res);
+      return errorHandler(
+        { statusCode: 400, message: "Name is required" },
+        res
+      );
     }
     if (!year) {
-      return errorHandler({ status: 400, message: "Year is required" }, res);
+      return errorHandler(
+        { statusCode: 400, message: "Year is required" },
+        res
+      );
     }
     const album = new AlbumModel({ name, artists, year, hidden });
     await album.save();
@@ -85,7 +91,10 @@ export async function addAlbum(req, res) {
       .status(201)
       .json({ data: null, status: 201, message: "Album added successfully" });
   } catch (err) {
-    return errorHandler({ status: 500, message: "Internal server error" }, res);
+    return errorHandler(
+      { statusCode: 500, message: "Internal server error" },
+      res
+    );
   }
 }
 
@@ -95,13 +104,13 @@ export async function updateAlbum(req, res) {
   try {
     if (!id) {
       return errorHandler(
-        { status: 400, message: "Bad request :Id is required" },
+        { statusCode: 400, message: "Bad request :Id is required" },
         res
       );
     }
     const album = await AlbumModel.findById(id);
     if (!album) {
-      return errorHandler({ status: 404, message: "Album not found" }, res);
+      return errorHandler({ statusCode: 404, message: "Album not found" }, res);
     }
     album.name = name || album.name;
     album.artists = artists || album.artists;
@@ -115,7 +124,10 @@ export async function updateAlbum(req, res) {
       error: null,
     });
   } catch (err) {
-    return errorHandler({ status: 500, message: "Internal server error" }, res);
+    return errorHandler(
+      { statusCode: 500, message: "Internal server error" },
+      res
+    );
   }
 }
 
@@ -124,13 +136,13 @@ export async function deleteAlbum(req, res) {
   try {
     if (!id) {
       return errorHandler(
-        { status: 400, message: "Bad request :Id is required" },
+        { statusCode: 400, message: "Bad request :Id is required" },
         res
       );
     }
     const album = await AlbumModel.findById(id);
     if (!album) {
-      return errorHandler({ status: 404, message: "Album not found" }, res);
+      return errorHandler({ statusCode: 404, message: "Album not found" }, res);
     }
     await album.remove();
     return res.status(200).json({
@@ -140,6 +152,9 @@ export async function deleteAlbum(req, res) {
       error: null,
     });
   } catch (err) {
-    return errorHandler({ status: 500, message: "Internal server error" }, res);
+    return errorHandler(
+      { statusCode: 500, message: "Internal server error" },
+      res
+    );
   }
 }

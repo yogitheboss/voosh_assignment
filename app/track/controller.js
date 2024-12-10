@@ -38,13 +38,13 @@ export async function getTrack(req, res) {
     const { id } = req.params;
     if (!id) {
       return errorHandler(
-        { status: 400, message: "Bad request Id is required" },
+        { statusCode: 400, message: "Bad request Id is required" },
         res
       );
     }
     const track = await TrackModel.findById(id);
     if (!track) {
-      return errorHandler({ status: 404, message: "Track not found" }, res);
+      return errorHandler({ statusCode: 404, message: "Track not found" }, res);
     }
     res.status(200).json({
       data: {
@@ -98,14 +98,14 @@ export async function updateTrack(req, res) {
     const { id } = req.params;
     if (!id) {
       return errorHandler(
-        { status: 400, message: "Bad request Id is required" },
+        { statusCode: 400, message: "Bad request Id is required" },
         res
       );
     }
     let { name, duration, album_id, artist_id, hidden } = req.body;
     const track = await TrackModel.findById(id);
     if (!track) {
-      return errorHandler({ status: 404, message: "Track not found" }, res);
+      return errorHandler({ statusCode: 404, message: "Track not found" }, res);
     }
     if (!Array.isArray(artist_id)) {
       artist_id = [artist_id];
@@ -130,13 +130,13 @@ export async function deleteTrack(req, res) {
     const { id } = req.params;
     if (!id) {
       return errorHandler(
-        { status: 400, message: "Bad request Id is required" },
+        { statusCode: 400, message: "Bad request Id is required" },
         res
       );
     }
     const track = await TrackModel.findByIdAndDelete(id);
     if (!track) {
-      return errorHandler({ status: 404, message: "Track not found" }, res);
+      return errorHandler({ statusCode: 404, message: "Track not found" }, res);
     }
     res.status(200).json(track);
   } catch (error) {

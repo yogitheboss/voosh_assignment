@@ -6,7 +6,7 @@ export const getArtist = async (req, res) => {
     if (!id) {
       return errorHandler(
         {
-          status: 400,
+          statusCode: 400,
           message: "Id is required",
         },
         res
@@ -16,7 +16,7 @@ export const getArtist = async (req, res) => {
     if (!artist) {
       return errorHandler(
         {
-          status: 404,
+          statusCode: 404,
           message: "Artist not found",
         },
         res
@@ -36,7 +36,7 @@ export const getArtist = async (req, res) => {
   } catch (err) {
     return errorHandler(
       {
-        status: 500,
+        statusCode: 500,
         message: "Internal server error",
       },
       res
@@ -75,7 +75,7 @@ export const getArtists = async (req, res) => {
   } catch (err) {
     return errorHandler(
       {
-        status: 500,
+        statusCode: 500,
         message: "Internal server error",
       },
       res
@@ -89,7 +89,7 @@ export const addArtist = async (req, res) => {
     if (!name) {
       return errorHandler(
         {
-          status: 400,
+          statusCode: 400,
           message: "Name is required",
         },
         res
@@ -106,7 +106,7 @@ export const addArtist = async (req, res) => {
   } catch (err) {
     return errorHandler(
       {
-        status: 500,
+        statusCode: 500,
         message: "Internal server error",
       },
       res
@@ -121,7 +121,7 @@ export const updateArtist = async (req, res) => {
     if (!id) {
       return errorHandler(
         {
-          status: 400,
+          statusCode: 400,
           message: "Bad Request :Id is required",
         },
         res
@@ -131,7 +131,7 @@ export const updateArtist = async (req, res) => {
     if (!artist) {
       return errorHandler(
         {
-          status: 404,
+          statusCode: 404,
           message: "Artist not found",
         },
         res
@@ -149,7 +149,7 @@ export const updateArtist = async (req, res) => {
   } catch (err) {
     return errorHandler(
       {
-        status: 500,
+        statusCode: 500,
         message: "Internal server error",
       },
       res
@@ -159,11 +159,12 @@ export const updateArtist = async (req, res) => {
 
 export const deleteArtist = async (req, res) => {
   const { id } = req.params;
+  console.log("I am called");
   try {
     if (!id) {
       return errorHandler(
         {
-          status: 400,
+          statusCode: 400,
           message: "Bad Request Id is required",
         },
         res
@@ -173,7 +174,7 @@ export const deleteArtist = async (req, res) => {
     if (!artist) {
       return errorHandler(
         {
-          status: 404,
+          statusCode: 404,
           message: "Artist not found",
         },
         res
@@ -191,7 +192,7 @@ export const deleteArtist = async (req, res) => {
   } catch (err) {
     return errorHandler(
       {
-        status: 500,
+        statusCode: 500,
         message: "Internal server error",
       },
       res
