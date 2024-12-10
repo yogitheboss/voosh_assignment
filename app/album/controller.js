@@ -17,7 +17,7 @@ export async function getAlbums(req, res) {
       .exec();
     const newAlbums = albums.map((album) => {
       return {
-        id: album._id,
+        album_id: album._id,
         name: album.name,
         artist_name: album.artists.map((artist) => artist.name),
         year: album.year,
@@ -48,7 +48,7 @@ export async function getAlbum(req, res) {
     }
     const album = await AlbumModel.findById(id).populate("artists").exec();
     const newAlbum = {
-      id: album._id,
+      album_id: album._id,
       name: album.name,
       artist_name: album.artists.map((artist) => artist.name),
       year: album.year,
@@ -58,7 +58,7 @@ export async function getAlbum(req, res) {
       return errorHandler({ status: 404, message: "Album not found" }, res);
     }
     return res.status(200).json({
-      data: album,
+      data: newAlbum,
       status: 200,
       message: "Album retrieved successfully",
       error: null,
