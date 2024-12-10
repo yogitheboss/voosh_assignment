@@ -57,6 +57,7 @@ export async function getFavorites(req, res) {
       message: "Favorites retrieved successfully",
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
@@ -87,6 +88,7 @@ export async function addFavorite(req, res) {
       message: "Favorite added successfully",
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
@@ -104,7 +106,7 @@ export async function deleteFavorite(req, res) {
     if (!favorite) {
       return errorHandler({ status: 404, message: "Favorite not found" }, res);
     }
-    await favorite.remove();
+    await favorite.deleteOne();
     return res.status(200).json({
       data: null,
       status: 200,
@@ -112,6 +114,7 @@ export async function deleteFavorite(req, res) {
       error: null,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }

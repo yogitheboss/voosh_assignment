@@ -30,6 +30,7 @@ export async function getTracks(req, res) {
     });
     res.status(200).json(newTracks);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
@@ -60,6 +61,7 @@ export async function getTrack(req, res) {
       message: "Track retrieved successfully",
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
@@ -90,6 +92,7 @@ export async function addTrack(req, res) {
       error: null,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
@@ -122,6 +125,7 @@ export async function updateTrack(req, res) {
 
     res.status(200).json(track);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
@@ -140,6 +144,8 @@ export async function deleteTrack(req, res) {
     }
     res.status(200).json(track);
   } catch (error) {
+    console.error(error);
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }

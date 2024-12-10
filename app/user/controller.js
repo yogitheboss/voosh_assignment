@@ -45,6 +45,7 @@ export const getUsers = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    console.error(err);
     return res.status(500).json({ message: "Server error occurred" });
   }
 };
@@ -97,6 +98,7 @@ export const addUser = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    console.error(err);
     return res.status(500).json({ message: "Server error occurred" });
   }
 };
@@ -131,6 +133,7 @@ export const deleteUser = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    console.error(err);
     return res.status(500).json({ message: "Server error occurred" });
   }
 };
@@ -153,6 +156,7 @@ export const updatePassword = async (req, res) => {
       message: "Password updated successfully",
     });
   } catch (err) {
+    console.error(err);
     console.error(err);
     return res.status(500).json({ message: "Server error occurred" });
   }

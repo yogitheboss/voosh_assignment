@@ -59,6 +59,7 @@ export const authorize = function (roles = []) {
         next();
       });
     } catch (err) {
+      console.error(err);
       console.log(err);
       return req.res.send.status(500).json({ message: "Server Error Occured" });
     }

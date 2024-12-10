@@ -31,6 +31,7 @@ export async function getAlbums(req, res) {
       message: "Albums retrieved successfully",
     });
   } catch (err) {
+    console.error(err);
     return res
       .status(500)
       .json({ message: "Internal server error", status: 500 });
@@ -64,6 +65,7 @@ export async function getAlbum(req, res) {
       error: null,
     });
   } catch (err) {
+    console.error(err);
     return res
       .status(500)
       .json({ message: "Internal server error", status: 500 });
@@ -91,6 +93,7 @@ export async function addAlbum(req, res) {
       .status(201)
       .json({ data: null, status: 201, message: "Album added successfully" });
   } catch (err) {
+    console.error(err);
     return errorHandler(
       { statusCode: 500, message: "Internal server error" },
       res
@@ -124,6 +127,7 @@ export async function updateAlbum(req, res) {
       error: null,
     });
   } catch (err) {
+    console.error(err);
     return errorHandler(
       { statusCode: 500, message: "Internal server error" },
       res
@@ -144,7 +148,7 @@ export async function deleteAlbum(req, res) {
     if (!album) {
       return errorHandler({ statusCode: 404, message: "Album not found" }, res);
     }
-    await album.remove();
+    await album.deleteOne();
     return res.status(200).json({
       data: null,
       status: 200,
@@ -152,6 +156,7 @@ export async function deleteAlbum(req, res) {
       error: null,
     });
   } catch (err) {
+    console.error(err);
     return errorHandler(
       { statusCode: 500, message: "Internal server error" },
       res

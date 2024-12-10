@@ -60,6 +60,7 @@ export const signUp = async (req, res) => {
       message: "User created successfully",
     });
   } catch (err) {
+    console.error(err);
     console.log(err);
     return errorHandler(
       {
@@ -106,6 +107,7 @@ export const signIn = async (req, res) => {
     const token = await issueToken(userToSend);
     return res.status(200).json({ ...userToSend, token, status: 200 });
   } catch (err) {
+    console.error(err);
     console.log(err);
     return errorHandler(
       {
@@ -122,6 +124,7 @@ export const logout = async (req, res) => {
   try {
     return res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
+    console.error(err);
     console.log(err);
     return errorHandler(
       {

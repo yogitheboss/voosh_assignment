@@ -34,6 +34,7 @@ export const getArtist = async (req, res) => {
       status: 200,
     });
   } catch (err) {
+    console.error(err);
     return errorHandler(
       {
         statusCode: 500,
@@ -73,6 +74,7 @@ export const getArtists = async (req, res) => {
       error: null,
     });
   } catch (err) {
+    console.error(err);
     return errorHandler(
       {
         statusCode: 500,
@@ -104,6 +106,7 @@ export const addArtist = async (req, res) => {
       error: null,
     });
   } catch (err) {
+    console.error(err);
     return errorHandler(
       {
         statusCode: 500,
@@ -147,6 +150,7 @@ export const updateArtist = async (req, res) => {
       status: 204,
     });
   } catch (err) {
+    console.error(err);
     return errorHandler(
       {
         statusCode: 500,
@@ -180,16 +184,18 @@ export const deleteArtist = async (req, res) => {
         res
       );
     }
-    await artist.remove();
-    return res.status(204).json({
+    await artist.deleteOne();
+    return res.status(200).json({
       data: {
         id: artist._id,
       },
       message: "Artist Deleted Successfully",
-      status: 204,
+      status: 200,
       error: null,
     });
   } catch (err) {
+    console.error(err);
+
     return errorHandler(
       {
         statusCode: 500,
