@@ -73,7 +73,7 @@ export async function getAlbum(req, res) {
 }
 
 export async function addAlbum(req, res) {
-  const { name, artists, year, hidden } = req.body;
+  const { name, artist_id, year, hidden } = req.body;
   try {
     if (!name) {
       return errorHandler(
@@ -87,11 +87,14 @@ export async function addAlbum(req, res) {
         res
       );
     }
-    const album = new AlbumModel({ name, artists, year, hidden });
+    const album = new AlbumModel({ name, artists: [artist_id], year, hidden });
     await album.save();
-    return res
-      .status(201)
-      .json({ data: null, status: 201, message: "Album added successfully" });
+    return res.status(201).json({
+      data: null,
+      status: 201,
+      message: "Album added successfully",
+      error: null,
+    });
   } catch (err) {
     console.error(err);
     return errorHandler(
@@ -152,7 +155,7 @@ export async function deleteAlbum(req, res) {
     return res.status(200).json({
       data: null,
       status: 200,
-      message: "Album deleted successfully",
+      message: `Album-${album?.name} deleted successfully`,
       error: null,
     });
   } catch (err) {
