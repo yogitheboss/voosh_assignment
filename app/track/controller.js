@@ -16,14 +16,13 @@ export async function getTracks(req, res) {
       .limit(limit)
       .populate("artists")
       .populate("album")
-      .select("name")
       .exec();
     const newTracks = tracks.map((track) => {
       return {
         track_id: track._id,
         name: track.name,
         artist_name: track.artists.map((artist) => artist.name),
-        album_name: track.album.name,
+        album_name: track.album.map((album) => album.name),
         duration: track.duration,
         hidden: track.hidden,
       };
@@ -43,7 +42,10 @@ export async function getTrack(req, res) {
         res
       );
     }
-    const track = await TrackModel.findById(id);
+    const track = await TrackModel.findById(id)
+      .populate("artists")
+      .populate("album")
+      .exec();
     if (!track) {
       return errorHandler({ statusCode: 404, message: "Track not found" }, res);
     }
@@ -52,7 +54,7 @@ export async function getTrack(req, res) {
         track_id: track._id,
         name: track.name,
         artist_name: track.artists.map((artist) => artist.name),
-        album_name: track.album.name,
+        album_name: track.album.map((album) => album.name),
         duration: track.duration,
         hidden: track.hidden,
       },
@@ -123,7 +125,12 @@ export async function updateTrack(req, res) {
     track.hidden = hidden || track.hidden;
     await track.save();
 
-    res.status(200).json(track);
+    res.status(200).json({
+      data: null,
+      status: 204,
+      message: "Track updated successfully",
+      error: null,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
@@ -142,7 +149,12 @@ export async function deleteTrack(req, res) {
     if (!track) {
       return errorHandler({ statusCode: 404, message: "Track not found" }, res);
     }
-    res.status(200).json(track);
+    res.status(200).json({
+      data: null,
+      status: 200,
+      message: "Track deleted successfully",
+      error: null,
+    });
   } catch (error) {
     console.error(error);
     console.error(error);

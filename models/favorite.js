@@ -8,7 +8,7 @@ const favoriteSchema = new mongoose.Schema(
       enum: ["artist", "album", "track"], // Type of favorite item
       required: true,
     },
-    itemId: { type: mongoose.Schema.Types.ObjectId, required: true }, // ID of the favorite item (artist, album, or track)
+    item_id: { type: mongoose.Schema.Types.ObjectId, required: true }, // ID of the favorite item (artist, album, or track)
   },
   { timestamps: true }
 );

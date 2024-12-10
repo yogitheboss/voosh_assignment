@@ -6,12 +6,12 @@ import { ArtistModel } from "../../models/artist.js";
 
 export async function getFavorites(req, res) {
   try {
-    const category = req.query.category;
+    const category = req.params.category;
     const limit = parseInt(req.query.limit) || 5;
     const offset = parseInt(req.query.offset) || 0;
     if (!category) {
       return errorHandler(
-        { status: 400, message: "Bad request category is required" },
+        { statusCode: 400, message: "Bad request category is required" },
         res
       );
     }
@@ -27,19 +27,22 @@ export async function getFavorites(req, res) {
       const favorite = favorites[i];
 
       if (category === "track") {
-        let trackId = favorite.itemId;
-        const track = TrackModel.findById(trackId);
-        favorite.name = track.name;
+        let trackId = favorite.item_id;
+        const track = await TrackModel.findById(trackId);
+        favorites[i].name = track.name;
+        favorites[i].created_at = track.createdAt;
       }
       if (category === "album") {
-        let albumId = favorite.itemId;
-        const album = AlbumModel.findById(albumId);
-        favorite.name = album.name;
+        let albumId = favorite.item_id;
+        const album = await AlbumModel.findById(albumId);
+        favorites[i].name = album.name;
+        favorites[i].created_at = album.createdAt;
       }
       if (category === "artist") {
-        let artistId = favorite.itemId;
-        const artist = ArtistModel.findById(artistId);
-        favorite.name = artist.name;
+        let artistId = favorite.item_id;
+        const artist = await ArtistModel.findById(artistId);
+        favorites[i].name = artist.name;
+        favorites[i].created_at = artist.createdAt;
       }
     }
     favorites = favorites.map((favorite) => {
@@ -47,7 +50,8 @@ export async function getFavorites(req, res) {
         favorite_id: favorite._id,
         name: favorite.name,
         category: favorite.category,
-        item_id: favorite.itemId,
+        item_id: favorite.item_id,
+        created_at: favorite.created_at,
       };
     });
     return res.status(200).json({
@@ -64,12 +68,12 @@ export async function getFavorites(req, res) {
 
 export async function addFavorite(req, res) {
   try {
-    const { category, itemId } = req.body;
-    if (!category || !itemId) {
+    const { category, item_id } = req.body;
+    if (!category || !item_id) {
       return errorHandler(
         {
-          status: 400,
-          message: "Bad request category and itemId are required",
+          statusCode: 400,
+          message: "Bad request category and item_id are required",
         },
         res
       );
@@ -78,7 +82,7 @@ export async function addFavorite(req, res) {
     const favorite = new FavoriteModel({
       user: user._id,
       category: category,
-      itemId: itemId,
+      item_id: item_id,
     });
     await favorite.save();
     return res.status(201).json({
@@ -98,13 +102,16 @@ export async function deleteFavorite(req, res) {
   try {
     if (!id) {
       return errorHandler(
-        { status: 400, message: "Bad request :Id is required" },
+        { statusCode: 400, message: "Bad request :Id is required" },
         res
       );
     }
     const favorite = await FavoriteModel.findById(id);
     if (!favorite) {
-      return errorHandler({ status: 404, message: "Favorite not found" }, res);
+      return errorHandler(
+        { statusCode: 404, message: "Favorite not found" },
+        res
+      );
     }
     await favorite.deleteOne();
     return res.status(200).json({
