@@ -83,6 +83,15 @@ The project is organized as follows:
 |--------|----------------|--------------------------|
 | POST   | \`/api/v1/login\`  | User login               |
 | POST   | \`/api/v1/signup\` | User registration        |
+| GET   | \`/api/v1/logout\` | User logout        |
+
+### **Users**
+| Method | Endpoint       | Description              |
+|--------|----------------|--------------------------|
+| GET   | \`/api/v1/users\`  | Get Users               |
+| POST   | \`/api/v1/users/add-user\` | User addition        |
+| DELETE   | \`/api/v1/logout/users/:id\` | Delete User       |
+| PUT   | \`/api/v1/logout/users/update-password\` | Update user password        |
 
 ### **Artists**
 | Method | Endpoint         | Description                      |
@@ -90,14 +99,15 @@ The project is organized as follows:
 | GET    | \`/api/v1/artists\`       | Retrieve all artists             |
 | GET    | \`/api/v1/artists/:id\`       | Retrieve all artists             |
 | POST   | \`/api/v1/artists/add-artist\`       | Create a new artist              |
-| PUT    | \`/api/v1/artists/:id\`   | Update an artist's information   |
+| PUT    | \`/api/v1/artists/update-artist\`   | Update an artist's information   |
 | DELETE | \`/api/v1/artists/:id\`   | Delete an artist                 |
 
 ### **Albums**
 | Method | Endpoint         | Description                      |
 |--------|------------------|----------------------------------|
 | GET    | \`/albums\`        | Retrieve all albums              |
-| POST   | \`/albums\`        | Create a new album               |
+| GET    | \`/albums\:id`        | Retrieve album              |
+| POST   | \`/albums/add-album\`        | Create a new album               |
 | PUT    | \`/albums/:id\`    | Update an album's information    |
 | DELETE | \`/albums/:id\`    | Delete an album                  |
 
@@ -105,7 +115,8 @@ The project is organized as follows:
 | Method | Endpoint         | Description                      |
 |--------|------------------|----------------------------------|
 | GET    | \`/tracks\`        | Retrieve all tracks              |
-| POST   | \`/tracks\`        | Create a new track               |
+| GET    | \`/tracks/:id\`        | Retrieve a track              |
+| POST   | \`/tracks/add-track\`        | Create a new track               |
 | PUT    | \`/tracks/:id\`    | Update a track's information     |
 | DELETE | \`/tracks/:id\`    | Delete a track                   |
 
@@ -113,7 +124,7 @@ The project is organized as follows:
 | Method | Endpoint          | Description                           |
 |--------|-------------------|---------------------------------------|
 | GET    | \`/favorites\`      | Retrieve all user favorites  based on category         |
-| POST   | \`/favorites\`      | Add an item (artist, album, track) to favorites |
+| POST   | \`/favorites/add-favorite\`      | Add an item (artist, album, track) to favorites |
 | DELETE | \`/favorites/:id\`  | Remove an item from favorites         |
 
 ---
