@@ -5,7 +5,7 @@ configDotenv();
 // const redisClient = redis.createClient();
 const _SecretToken = process.env.JWT_SECRET;
 const _TokenExpiryTime = "24h";
-
+const tokenBlackList = [];
 export const authorize = function (roles = []) {
   if (!Array.isArray(roles)) roles = [roles];
 
@@ -25,6 +25,9 @@ export const authorize = function (roles = []) {
         return sendError("Error: User Not Authorized"); // Wrong format
 
       const tokenString = token.split(" ")[1];
+      if (tokenBlackList.includes(tokenString))
+        return sendError("Error: User Not Authorized"); // Token is blacklisted
+
       jwt.verify(tokenString, _SecretToken, (err, decodedToken) => {
         if (err) {
           console.log(err);
@@ -68,6 +71,13 @@ export const issueToken = function (user) {
     expiresIn: _TokenExpiryTime,
   });
   return token;
+};
+
+export const blackListToken = function (req) {
+  const token = req.headers["authorization"] || req.headers["Authorization"];
+  if (!token) return;
+  const tokenString = token.split(" ")[1];
+  tokenBlackList.push(tokenString);
 };
 
 // export const blackListToken = async function (req) {

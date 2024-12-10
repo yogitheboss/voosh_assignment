@@ -1,7 +1,7 @@
 import { UserModel } from "../../models/user.js";
 import { errorHandler } from "../../helpers/errorHandler.js";
 import { separateName } from "../../helpers/separateName.js";
-import { issueToken } from "../../middlewares/auth.js";
+import { blackListToken, issueToken } from "../../middlewares/auth.js";
 import bcrypt from "bcrypt";
 export const signUp = async (req, res) => {
   const { email, password, role, name } = req.body;
@@ -118,6 +118,7 @@ export const signIn = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
+  blackListToken(req);
   try {
     return res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
